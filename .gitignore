@@ -3,8 +3,9 @@
 
 # IntelliJ project files
 .idea
+*.env.*
 node_modules
 *.iml
 out
 gen
-.env.*
+
