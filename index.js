@@ -2,7 +2,12 @@
 const { Client, Events, GatewayIntentBits, Collection} = require('discord.js');
 const fs = require('node:fs');
 const path = require('node:path');
-require("dotenv").config()
+
+const ENV = process.env.NODE_ENV
+const pathToCorrectFile = `${__dirname}/.env.${ENV}`;
+require("dotenv").config({ path: pathToCorrectFile });
+
+// require("dotenv").config()
 
 // Client Creation
 const token = process.env.DISCORD_TOKEN

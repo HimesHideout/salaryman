@@ -4,8 +4,10 @@
   "description": "TBC",
   "main": "index.js",
   "scripts": {
-    "start": "node index.js",
-    "serve-commands": "node deploy-commands.js",
+    "dev": "NODE_ENV=development node index.js",
+    "prod": "NODE_ENV=production node index.js",
+    "serve-dev-commands": "NODE_ENV=development node deploy-commands.js",
+    "serve-prod-commands": "NODE_ENV=production node deploy-commands.js",
     "test": "jest"
   },
   "keywords": [],

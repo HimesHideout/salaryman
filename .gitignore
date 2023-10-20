@@ -3,7 +3,7 @@
 
 # IntelliJ project files
 .idea
-.env
+.env*
 node_modules
 *.iml
 out

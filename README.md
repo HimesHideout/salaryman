@@ -9,12 +9,14 @@ to set up your discord bot and tokens effectively.
 
 ### Environment Variables
 
-There are three environment variables needed in your `.env` file:
+There are two files you will need: `.env.production` for your actual bot, and `.env.development` for your development bot.
+
+There are three environment variables needed in your `.env` files:
 
 ```js
-// .env
+// .env.production AND .env.development
 
-DISCORD_TOKEN=your_dev_token
+DISCORD_TOKEN=your_token
 GUILD_ID=your_guild_id
 CLIENT_ID=your_client_id
 ```
@@ -27,11 +29,15 @@ server and clicking "Copy Id".
 Your Client ID is found on the main page of your bot, under **Application ID**.
 
 ### Running the bot
+#### Development Bot
 
-First run `node deploy-commands.js` to initialize your slash commands
+1. `npm run serve-dev-commands` to initialize your slash commands
+2. `npm run dev` to host the bot
 
-Finally, run `node index.js` and the bot should become active
+#### Production Bot
 
+1. `npm run serve-prod-commands` to initialize your slash commands
+2. `npm run prod` to host the bot
 
 ## Features
 
