@@ -27,8 +27,8 @@ There are two files you will need: `.env.production` for your actual bot, and `.
 
 There are three environment variables needed in your `.env` files:
 
-```js
-// .env.production AND .env.development
+```dotenv
+#.env.production AND .env.development
 
 DISCORD_TOKEN=your_token
 GUILD_ID=your_guild_id
