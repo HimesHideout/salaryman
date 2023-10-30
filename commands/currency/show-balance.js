@@ -8,7 +8,6 @@ module.exports = {
     async execute(interaction) {
         const userID = interaction.user.id
         const player = await getPlayerById(userID)
-        console.log(player)
         if (player === undefined){
             await interaction.reply(`No user profile!`);
         } else {
