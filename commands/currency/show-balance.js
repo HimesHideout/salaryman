@@ -1,6 +1,5 @@
 const {SlashCommandBuilder, EmbedBuilder} = require("discord.js");
-const fs = require("fs")
-const {createUser} = require("../../utils");
+const {getPlayerById} = require("../../api");
 
 module.exports = {
     data: new SlashCommandBuilder()
@@ -8,14 +7,14 @@ module.exports = {
         .setDescription('Shows your balance'),
     async execute(interaction) {
         const userID = interaction.user.id
-        const data = JSON.parse(fs.readFileSync("__tests__/test-data.json", "utf-8"))
-        if (data[userID] === undefined){
-            createUser(userID)
-            await interaction.reply(`No user profile! User created. Balance: 0`);
+        const player = await getPlayerById(userID)
+        console.log(player)
+        if (player === undefined){
+            await interaction.reply(`No user profile!`);
         } else {
             const exampleEmbed = new EmbedBuilder()
                 .setTitle(`${interaction.user.tag}`)
-                .setDescription(`Balance: ${data[userID].balance}`)
+                .setDescription(`Balance: ${player.balance}`)
                 .setThumbnail(interaction.user.displayAvatarURL())
             await interaction.reply({embeds: [exampleEmbed]});
         }
