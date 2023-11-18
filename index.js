@@ -58,4 +58,4 @@ for (const file of eventFiles) {
 }
 
 // Ready Up Bot
-client.login(token);
+await client.login(token);
