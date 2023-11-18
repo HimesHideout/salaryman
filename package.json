@@ -1,6 +1,7 @@
 {
   "name": "dumpybot",
   "version": "1.0.0",
+  "type": "module",
   "description": "TBC",
   "main": "index.js",
   "scripts": {
@@ -9,6 +10,9 @@
     "serve-dev-commands": "NODE_ENV=development node deploy-commands.js",
     "serve-prod-commands": "NODE_ENV=production node deploy-commands.js",
     "test": "jest"
+  },
+  "imports": {
+    "#root/*.js": "./*.js"
   },
   "keywords": [],
   "author": "",

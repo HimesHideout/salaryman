@@ -1,10 +1,17 @@
-const { REST, Routes } = require('discord.js');
-const fs = require('node:fs');
-const path = require('node:path');
+import {REST, Routes} from "discord.js";
+
+import fs from "node:fs";
+import path, {dirname} from "node:path";
+import {config} from "dotenv";
+import {fileURLToPath} from 'url';
+
+const __filename = import.meta.url;
+const __dirname = dirname(__filename)
 
 const ENV = process.env.NODE_ENV
-const pathToCorrectFile = `${__dirname}/.env.${ENV}`;
-require("dotenv").config({ path: pathToCorrectFile });
+const pathToCorrectFile = fileURLToPath(`${__dirname}/.env.${ENV}`);
+config({ path: pathToCorrectFile });
+
 
 // require("dotenv").config()
 
@@ -15,16 +22,16 @@ const token = process.env.DISCORD_TOKEN
 const commands = [];
 // Grab all the command files from the commands directory you created earlier
 const foldersPath = path.join(__dirname, 'commands');
-const commandFolders = fs.readdirSync(foldersPath);
+const commandFolders = fs.readdirSync(fileURLToPath(foldersPath));
 
 for (const folder of commandFolders) {
     // Grab all the command files from the commands directory you created earlier
     const commandsPath = path.join(foldersPath, folder);
-    const commandFiles = fs.readdirSync(commandsPath).filter(file => file.endsWith('.js'));
+    const commandFiles = fs.readdirSync(fileURLToPath(commandsPath)).filter(file => file.endsWith('.js'));
     // Grab the SlashCommandBuilder#toJSON() output of each command's data for deployment
     for (const file of commandFiles) {
         const filePath = path.join(commandsPath, file);
-        const command = require(filePath);
+        const { default: command } = await import (filePath);
         if ('data' in command && 'execute' in command) {
             commands.push(command.data.toJSON());
         } else {
