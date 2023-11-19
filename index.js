@@ -3,7 +3,7 @@ import path, {dirname} from "node:path";
 import {fileURLToPath, pathToFileURL} from 'url';
 import {config} from "dotenv";
 import fs from "node:fs";
-import {Client, Collection, Events, GatewayIntentBits} from "discord.js";
+import {Client, Collection, GatewayIntentBits} from "discord.js";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename)
@@ -18,6 +18,8 @@ const client = new Client({ intents: [GatewayIntentBits["Guilds"]] });
 
 // Commands Handler
 client.commands = new Collection();
+client.cooldowns = new Collection();
+
 const foldersPath = path.join(__dirname, 'commands');
 const commandFolders = fs.readdirSync(foldersPath);
 
