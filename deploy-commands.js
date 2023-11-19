@@ -4,6 +4,7 @@ import fs from "node:fs";
 import path, {dirname} from "node:path";
 import {config} from "dotenv";
 import {fileURLToPath, pathToFileURL} from 'url';
+import chalk from "chalk";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename)
@@ -11,9 +12,6 @@ const __dirname = dirname(__filename)
 const ENV = process.env.NODE_ENV
 const pathToCorrectFile = `${__dirname}/.env.${ENV}`;
 config({ path: pathToCorrectFile });
-
-
-// require("dotenv").config()
 
 const clientId = process.env.CLIENT_ID
 const guildId = process.env.GUILD_ID
@@ -46,7 +44,7 @@ const rest = new REST().setToken(token);
 // and deploy your commands!
 (async () => {
     try {
-        console.log(`Started refreshing ${commands.length} application (/) commands.`);
+        console.log(chalk.yellow(`Started refreshing ${commands.length} application (/) commands.`));
 
         // The put method is used to fully refresh all commands in the guild with the current set
         const data = await rest.put(
@@ -54,7 +52,7 @@ const rest = new REST().setToken(token);
             { body: commands },
         );
 
-        console.log(`Successfully reloaded ${data.length} application (/) commands.`);
+        console.log(chalk.green(`Successfully reloaded ${data.length} application (/) commands.`));
     } catch (error) {
         // And of course, make sure you catch and log any errors!
         console.error(error);

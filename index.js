@@ -5,10 +5,6 @@ import {config} from "dotenv";
 import fs from "node:fs";
 import {Client, Collection, Events, GatewayIntentBits} from "discord.js";
 
-
-const __filenameRAW = import.meta.url;
-const __dirnameRAW = dirname(__filenameRAW)
-
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename)
 
@@ -45,7 +41,6 @@ const eventFiles = fs.readdirSync(eventsPath).filter(file => file.endsWith('.js'
 
 for (const file of eventFiles) {
     const filePath = path.join(eventsPath, file);
-    // const event = require(filePath);
     const { default: event } = await import (pathToFileURL(filePath));
     if (event.once) {
         client.once(event.name, (...args) => event.execute(...args));
