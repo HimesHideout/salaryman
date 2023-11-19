@@ -1,12 +1,17 @@
-const { REST, Routes } = require('discord.js');
-const fs = require('node:fs');
-const path = require('node:path');
+import {REST, Routes} from "discord.js";
+
+import fs from "node:fs";
+import path, {dirname} from "node:path";
+import {config} from "dotenv";
+import {fileURLToPath, pathToFileURL} from 'url';
+import chalk from "chalk";
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename)
 
 const ENV = process.env.NODE_ENV
 const pathToCorrectFile = `${__dirname}/.env.${ENV}`;
-require("dotenv").config({ path: pathToCorrectFile });
-
-// require("dotenv").config()
+config({ path: pathToCorrectFile });
 
 const clientId = process.env.CLIENT_ID
 const guildId = process.env.GUILD_ID
@@ -24,7 +29,7 @@ for (const folder of commandFolders) {
     // Grab the SlashCommandBuilder#toJSON() output of each command's data for deployment
     for (const file of commandFiles) {
         const filePath = path.join(commandsPath, file);
-        const command = require(filePath);
+        const { default: command } = await import (pathToFileURL(filePath));
         if ('data' in command && 'execute' in command) {
             commands.push(command.data.toJSON());
         } else {
@@ -39,7 +44,7 @@ const rest = new REST().setToken(token);
 // and deploy your commands!
 (async () => {
     try {
-        console.log(`Started refreshing ${commands.length} application (/) commands.`);
+        console.log(chalk.yellow(`Started refreshing ${commands.length} application (/) commands.`));
 
         // The put method is used to fully refresh all commands in the guild with the current set
         const data = await rest.put(
@@ -47,7 +52,7 @@ const rest = new REST().setToken(token);
             { body: commands },
         );
 
-        console.log(`Successfully reloaded ${data.length} application (/) commands.`);
+        console.log(chalk.green(`Successfully reloaded ${data.length} application (/) commands.`));
     } catch (error) {
         // And of course, make sure you catch and log any errors!
         console.error(error);

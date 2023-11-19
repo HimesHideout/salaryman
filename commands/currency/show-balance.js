@@ -1,7 +1,9 @@
-const {SlashCommandBuilder, EmbedBuilder} = require("discord.js");
-const {getPlayerById} = require("../../api");
+import {EmbedBuilder, SlashCommandBuilder} from "discord.js";
 
-module.exports = {
+import {getPlayerById} from "../../api.js";
+
+
+export default {
     data: new SlashCommandBuilder()
         .setName('showbalance')
         .setDescription('Shows your balance'),

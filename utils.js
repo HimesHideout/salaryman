@@ -1,5 +1,6 @@
-const fs = require("fs")
-exports.createUser = (userID) => {
+import fs from "fs";
+
+export function createUser(userID) {
     // let userData = JSON.parse(fs.readFileSync("__tests__/test-data.json", "utf-8"))
     // userData[userID] = {
     //     balance: 0,

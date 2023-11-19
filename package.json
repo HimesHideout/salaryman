@@ -1,6 +1,7 @@
 {
   "name": "dumpybot",
   "version": "1.0.0",
+  "type": "module",
   "description": "TBC",
   "main": "index.js",
   "scripts": {
@@ -10,11 +11,15 @@
     "serve-prod-commands": "NODE_ENV=production node deploy-commands.js",
     "test": "jest"
   },
+  "imports": {
+    "#root/*.js": "./*.js"
+  },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
     "axios": "^1.6.0",
+    "chalk": "^5.3.0",
     "discord.js": "^14.13.0",
     "dotenv": "^16.3.1"
   },

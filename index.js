@@ -1,11 +1,16 @@
 // Project Requirements
-const { Client, Events, GatewayIntentBits, Collection} = require('discord.js');
-const fs = require('node:fs');
-const path = require('node:path');
+import path, {dirname} from "node:path";
+import {fileURLToPath, pathToFileURL} from 'url';
+import {config} from "dotenv";
+import fs from "node:fs";
+import {Client, Collection, Events, GatewayIntentBits} from "discord.js";
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename)
 
 const ENV = process.env.NODE_ENV
 const pathToCorrectFile = `${__dirname}/.env.${ENV}`;
-require("dotenv").config({ path: pathToCorrectFile });
+config({ path: pathToCorrectFile });
 
 // Client Creation
 const token = process.env.DISCORD_TOKEN
@@ -21,7 +26,7 @@ for (const folder of commandFolders) {
     const commandFiles = fs.readdirSync(commandsPath).filter(file => file.endsWith('.js'));
     for (const file of commandFiles) {
         const filePath = path.join(commandsPath, file);
-        const command = require(filePath);
+        const { default: command } = await import (pathToFileURL(filePath));
         if ('data' in command && 'execute' in command) {
             client.commands.set(command.data.name, command);
         } else {
@@ -36,7 +41,7 @@ const eventFiles = fs.readdirSync(eventsPath).filter(file => file.endsWith('.js'
 
 for (const file of eventFiles) {
     const filePath = path.join(eventsPath, file);
-    const event = require(filePath);
+    const { default: event } = await import (pathToFileURL(filePath));
     if (event.once) {
         client.once(event.name, (...args) => event.execute(...args));
     } else {
@@ -45,4 +50,4 @@ for (const file of eventFiles) {
 }
 
 // Ready Up Bot
-client.login(token);
+await client.login(token);
