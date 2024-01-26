@@ -12,3 +12,8 @@ export const getPlayerById = async (userId) => {
     let r = await axios.get(`${baseURL}/api/players/${userId}`);
     return await r.data.player;
 }
+
+export const getItemsInShop = async () => {
+    let r = await axios.get(`${baseURL}/api/shop`);
+    return await r.data.items;
+}
