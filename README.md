@@ -4,7 +4,7 @@
 
 Here is the link to the back end so that you can request data from an AWS account and DynamoDB: 
 
-[be-dumpybot - The Backend Module](https://github.com/HimesHideout/be-dumpybot)
+[be-salaryman - The Backend Module](https://github.com/HimesHideout/be-salaryman)
 
 ## Setup
 
